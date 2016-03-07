@@ -12,53 +12,48 @@ public class VectorLinAlg {
 	private double[] vectorDouble;
 	private String type = "";
         	
-	//creates a vector with random int values ranging from 0 to 10 and dimension = dim
+	/**
+         * creates a vector with random int values ranging from 0 to 10 and dimension = dim
+         * if an int is used for dim, then the vector values will be double
+         * @param dim 
+         */
 	public VectorLinAlg(int dim){
 		type = "int";
 		this.vectorInt = new int[dim];
 		for(int i = 0; i < this.vectorInt.length; i++){
 			this.vectorInt[i] = (int)Math.floor(Math.random()*10);
-			System.out.println(this.vectorInt[i]);
 		}
 	}
 	
-	//creates a vector with random int values ranging from 0 to 10 and dimension = dim
-	//if a double is used for dim, then the vector values will be double
+        /**
+         * creates a vector with random int values ranging from 0 to 10 and dimension = dim
+         * if a double is used for dim, then the vector values will be double
+         * @param dim 
+         */
 	public VectorLinAlg(double dim){
 		type = "double";
 		this.vectorDouble = new double[(int)dim];
 		for(int i = 0; i < this.vectorDouble.length; i++){
 			this.vectorDouble[i] = Math.random()*10; 
-			System.out.println(this.vectorDouble[i]);
 		}
 	}
-//        
-//        public VectorLinAlg(int dim, int defaultVal){
-//            type = "int";
-//            this.vectorInt = new int[dim];
-//            for(int i = 0; i < dim; i++){
-//                this.vectorInt[i] = defaultVal;
-//            }
-//        }
-//        
-//        public VectorLinAlg(double dim, double defaultVal){
-//            type = "int";
-//            this.vectorDouble = new double[(int)dim];
-//            for(int i = 0; i < dim; i++){
-//                this.vectorDouble[i] = defaultVal;
-//            }
-//        }
-	
-	//takes in an int[] an wraps it in a VectorLinAlg object
+        
+        /**
+         * takes in an int[] an wraps it in a VectorLinAlg object
+         * @param arr 
+         */
 	public VectorLinAlg(int[] arr){
 		type = "int";
 		this.vectorInt = new int[arr.length];
 		for(int i = 0; i < arr.length; i++){
-			this.vectorInt[i] = arr[i];
+                    this.vectorInt[i] = arr[i];
 		}
 	}
 	
-	//takes in a double[] an wraps it in a VectorLinAlg object
+        /**
+         * takes in a double[] an wraps it in a VectorLinAlg object
+         * @param arr 
+         */
 	public VectorLinAlg(double[] arr){
 		type = "double";
 		this.vectorDouble = new double[arr.length];
@@ -67,30 +62,46 @@ public class VectorLinAlg {
 		}
 	}
 	
-	//creates a vector with random values ranging from 0 to range and dimension = dim
+	
+        /**
+         * creates a vector with random int values ranging from 0 to range and dimension = dim
+         * @param dim
+         * @param range 
+         */
 	public VectorLinAlg(int dim, int range){
 		type = "int";
 		this.vectorInt = new int[dim];
 		for(int i = 0; i < this.vectorInt.length; i++){
-			this.vectorInt[i] = (int)Math.floor(Math.random()*range); 
-			System.out.println(this.vectorInt[i]);
+			this.vectorInt[i] = (int)Math.floor(Math.random()*range);
 		}
 	}
 	
-	//creates a vector with random values ranging from 0 to range and dimension = dim
+	
+        /**
+         * creates a vector with random double values ranging from 0 to range and dimension = dim
+         * @param dim
+         * @param range 
+         */
 	public VectorLinAlg(int dim, double range){
 		type = "double";
 		this.vectorDouble = new double[dim];
 		for(int i = 0; i < this.vectorDouble.length; i++){
 			this.vectorDouble[i] = Math.random()*range; 
-			System.out.println(this.vectorDouble[i]);
 		}
 	}
-	//return type of vector (int or double)
+	
+        /**
+         * 
+         * @return type of vector (int or double)
+         */
 	public String getType(){
 		return type;
 	}
 	
+        /**
+         * 
+         * @return the dimension of the vector (count of elements, example: [3, 4, 5] returns 3 
+         */
 	public int getDimension(){
 		int dimension = 0;
 		
@@ -102,7 +113,11 @@ public class VectorLinAlg {
 		
 		return dimension;
 	}
-	//overridden for intuitive use
+	
+        /**
+         * 
+         * @return an intuitively readable vector as a string, example [3, 4, 5]
+         */
 	public String toString(){
 		return this.showVector();
 	}
@@ -170,11 +185,11 @@ public class VectorLinAlg {
          * @param scalar
          * @return new vector after scalar multiple is applied
          */
-	public static VectorLinAlg scalar(VectorLinAlg vector, int scalar){
+	public static VectorLinAlg scalar(VectorLinAlg vector, double scalar){
 		
 		if(vector.getType().equals("int")){
 			for(int i = 0; i < vector.getDimension(); i++){
-				vector.setIndexAtVectorInt(i, scalar * vector.getIndexAtVectorInt(i));
+				vector.setIndexAtVectorInt(i, (int)scalar * vector.getIndexAtVectorInt(i));
 			}
 		} else{
                     for(int i = 0; i < vector.getDimension(); i++){
@@ -245,6 +260,106 @@ public class VectorLinAlg {
             return result;
         }
         
+        /**
+         * 
+         * @param v1
+         * @param v2
+         * @return scalar product of the 2 vectors 
+         */
+        public static double dotProduct(VectorLinAlg v1, VectorLinAlg v2){
+            
+            String type = v1.getType();
+            int dim = v1.getDimension();
+            double scalar = 0;
+            if(type.equals("int")){
+                for(int i = 0; i < dim; i++){
+                    scalar += v1.getIndexAtVectorInt(i) * v2.getIndexAtVectorInt(i);
+                }
+            } else{
+                for(int i = 0; i < dim; i++){
+                    scalar += v1.getIndexAtVectorDouble(i) * v2.getIndexAtVectorDouble(i);
+                }
+            }
+            
+            return scalar;
+        }
+        
+        /**
+         * 
+         * @param v
+         * @return vector magnitude
+         */
+        public static double getMagnitude(VectorLinAlg v){
+            
+            String type = v.getType();
+            int dim = v.getDimension();
+            double squares = 0;
+            double result = 0;
+                    
+            if(type.equals("int")){
+                for(int i = 0; i < dim; i++){
+                    squares += Math.pow(v.getIndexAtVectorInt(i),2);
+                }
+            } else{
+                for(int i = 0; i < dim; i++){
+                    squares += Math.pow(v.getIndexAtVectorDouble(i),2);
+                }
+            }
+            
+            result = Math.sqrt(squares);
+            return result;
+        }
+        
+        /**
+         * 
+         * @param v1
+         * @param v2
+         * @return the angle between the two vectors as theta
+         */
+        public static double getTheta(VectorLinAlg v1, VectorLinAlg v2){
+            
+            //based on: a * b = ||a|| x ||b|| x cos(theta)
+            double productMagnitudes = getMagnitude(v1) * getMagnitude(v2); //||a|| * ||b||
+            double cosTheta = dotProduct(v1, v2) / productMagnitudes;
+            double theta = Math.acos(cosTheta);
+            return theta;
+        }
+        
+        /**
+         * calculates the cross product of v1 and v2, which 
+         * is applicable to 3 dimensional vectors only, and is NOT commutative
+         * if a vector of other that 3 dimensions is passed, null is returned
+         * calculation algorithm: a × b = |a| |b| sin(θ) n
+         * @param v1
+         * @param v2
+         * @return a new vector that is the cross product of v1 and v2 
+         */
+        public static VectorLinAlg crossProduct(VectorLinAlg v1, VectorLinAlg v2){
+            
+            String type = v1.getType();
+            int dim = v1.getDimension();
+            int dim2 = v2.getDimension();
+            if(dim != 3 | dim2 != 3){
+                return null;
+            }
+            double theta = getTheta(v1, v2);
+            double productMagnitudes = getMagnitude(v1) * getMagnitude(v2); //||a|| * ||b||
+            double scalar = productMagnitudes * Math.sin(theta);
+            VectorLinAlg unitVector;
+            
+            if(type.equals("int")){
+                unitVector = new VectorLinAlg(dim, 2);
+            } else {
+                unitVector = new VectorLinAlg(dim, 2.0);
+            }
+            
+            return scalar(unitVector, scalar);
+        }
+        
+        /**
+         * clears out a vector, keeping original dimension
+         * @param v 
+         */
         public static void zeroVector(VectorLinAlg v){
             
             String type = v.getType();
