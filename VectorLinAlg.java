@@ -329,7 +329,7 @@ public class VectorLinAlg {
          * calculates the cross product of v1 and v2, which 
          * is applicable to 3 dimensional vectors only, and is NOT commutative
          * if a vector of other that 3 dimensions is passed, null is returned
-         * calculation algorithm: a × b = |a| |b| sin(θ) n
+         * calculation algorithm: a x b = {a2b3 - a3b2, a3b1 - a1b3, a1b2 = a2b1}
          * @param v1
          * @param v2
          * @return a new vector that is the cross product of v1 and v2 
@@ -342,18 +342,30 @@ public class VectorLinAlg {
             if(dim != 3 | dim2 != 3){
                 return null;
             }
-            double theta = getTheta(v1, v2);
-            double productMagnitudes = getMagnitude(v1) * getMagnitude(v2); //||a|| * ||b||
-            double scalar = productMagnitudes * Math.sin(theta);
-            VectorLinAlg unitVector;
+            
+            VectorLinAlg resultVector;
             
             if(type.equals("int")){
-                unitVector = new VectorLinAlg(dim, 2);
+                
+                int a, b, c;                
+                a = v1.getIndexAtVectorInt(1) * v2.getIndexAtVectorInt(2) - v1.getIndexAtVectorInt(2) * v2.getIndexAtVectorInt(1); //a2b3 - a3b2
+                b = v1.getIndexAtVectorInt(2) * v2.getIndexAtVectorInt(0) - v1.getIndexAtVectorInt(0) * v2.getIndexAtVectorInt(2); //a3b1 - a1b3
+                c = v1.getIndexAtVectorInt(0) * v2.getIndexAtVectorInt(1) - v1.getIndexAtVectorInt(1) * v2.getIndexAtVectorInt(0); //a1b2 = a2b1
+                int[] vecValsInt = new int[]{a, b, c};
+                resultVector = new VectorLinAlg(vecValsInt);
+                
             } else {
-                unitVector = new VectorLinAlg(dim, 2.0);
+                
+                double a, b, c;                
+                a = v1.getIndexAtVectorDouble(1) * v2.getIndexAtVectorDouble(2) - v1.getIndexAtVectorDouble(2) * v2.getIndexAtVectorDouble(1); //a2b3 - a3b2
+                b = v1.getIndexAtVectorDouble(2) * v2.getIndexAtVectorDouble(0) - v1.getIndexAtVectorDouble(0) * v2.getIndexAtVectorDouble(2); //a3b1 - a1b3
+                c = v1.getIndexAtVectorDouble(0) * v2.getIndexAtVectorDouble(1) - v1.getIndexAtVectorDouble(1) * v2.getIndexAtVectorDouble(0); //a1b2 = a2b1
+                double[] vecValsDbl = new double[]{a, b, c};
+                resultVector = new VectorLinAlg(vecValsDbl);
+                
             }
             
-            return scalar(unitVector, scalar);
+            return resultVector;
         }
         
         /**
