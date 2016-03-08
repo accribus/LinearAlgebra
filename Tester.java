@@ -3,42 +3,39 @@ public class Tester {
 
 	public static void main(String[] args) {
 		
-                double dot = 0;
-		
-		double dd = 3.0;
-		
-		VectorLinAlg vectorDouble = new VectorLinAlg(dd);
-		System.out.println("vectorDouble" + vectorDouble.toString());                
-                
-                VectorLinAlg vecDblTmp = new VectorLinAlg(vectorDouble.getDimension(),2.0);
+            int[] seedInt1 = new int[]{1,22,3};
+            int[] seedInt2 = new int[]{4,5,6};
+            double[] seedDbl1 = new double[]{1.0,2.0,3.0};
+            double[] seedDbl2 = new double[]{4.0,5.0,6.0};
 
-                System.out.println("vecDblTmp" + vecDblTmp.toString());
-                
-                System.out.println(vectorDouble.toString() + " dot product " + vecDblTmp.toString());
-                dot = VectorLinAlg.dotProduct(vectorDouble,vecDblTmp);
-                System.out.println("vectorDouble dot product vecDblTmp: " + dot);
-                
-                double mag1 = VectorLinAlg.getMagnitude(vectorDouble);
-                double mag2 = VectorLinAlg.getMagnitude(vecDblTmp);
-                double prodSum = mag1 * mag2;
-                
-                double cosTheta = dot / prodSum;
-                System.out.println("cosTheta: " + cosTheta);
-                double theta = Math.acos(cosTheta);
-                
-                System.out.println("theta manually calculated: " + theta);
-                System.out.println("getTheta result: " + VectorLinAlg.getTheta(vectorDouble,vecDblTmp));
-                
-                VectorLinAlg vInt1 = new VectorLinAlg(3);
-                VectorLinAlg vInt2 = new VectorLinAlg(3);
-                System.out.println(vInt1.toString() + " cross product " + vInt2.toString());
-                VectorLinAlg vIntCP = VectorLinAlg.crossProduct(vInt1, vInt2);
-                System.out.println("cross prod vInt1 x vInt2: " + vIntCP.toString());
-                
-                VectorLinAlg vDblCP = VectorLinAlg.crossProduct(vectorDouble,vecDblTmp);
-                System.out.println(vectorDouble.toString() + " cross product " + vecDblTmp.toString());
-                System.out.println("cross prod vectorDouble x vecDblTmp: " + vDblCP.toString());
-                
+            VectorLinAlg intV1 = new VectorLinAlg(seedInt1);
+            VectorLinAlg intV2 = new VectorLinAlg(seedInt2);
+            VectorLinAlg dblV1 = new VectorLinAlg(seedDbl1);
+            VectorLinAlg dblV2 = new VectorLinAlg(seedDbl2);
+
+            System.out.println("intV1" + intV1.toString());
+            System.out.println("intV2" + intV2.toString());
+            System.out.println("dblV1" + dblV1.toString());
+            System.out.println("dblV2" + dblV2.toString());
+
+            System.out.println("intV1 vector magnitude: " + VectorLinAlg.getMagnitude(intV1));
+            System.out.println("intV2 vector magnitude: " + VectorLinAlg.getMagnitude(intV2));
+            System.out.println("dblV1 vector magnitude: " + VectorLinAlg.getMagnitude(dblV1));
+            System.out.println("dblV2 vector magnitude: " + VectorLinAlg.getMagnitude(dblV2));
+
+            double intDot = VectorLinAlg.dotProduct(intV1, intV2);
+            double dblDot = VectorLinAlg.dotProduct(dblV1, dblV2);
+
+            System.out.println("int vector dot product: " + intDot);
+            System.out.println("dbl vector dot product: " + dblDot);
+            
+            System.out.println("getTheta(intV1, intV2): " + VectorLinAlg.getTheta(intV1, intV2));
+            
+            VectorLinAlg vecCrossPrdInt = VectorLinAlg.crossProduct(intV1, intV2);
+            System.out.println("vecCrossPrdInt: " + vecCrossPrdInt.toString());
+            
+            VectorLinAlg vecCrossPrdDbl = VectorLinAlg.crossProduct(dblV1, dblV2);
+            System.out.println("vecCrossPrdDbl: " + vecCrossPrdDbl.toString());
 
 	}
 
