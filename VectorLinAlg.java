@@ -259,5 +259,53 @@ public class VectorLinAlg {
                 v.setIndexAtVector(i, 0);
             }
         }
+        /**
+         * Creates a unit vector.
+         * @param v1
+         * @return a normalized vector
+         * 
+         */
+        public static VectorLinAlg unitVector(VectorLinAlg v){
+             int dim = v.getDimension(); //Pass dimension of v into method
+             double mag = v.getMagnitude(); //Pass magnitude of v into method
+             
+             double[] tmp = new double[dim]; //Create an empty container called array, of size dim.
+             
+             for(int i = 0; i < dim; i++){ //for loop divides every element in v by mag.
+                tmp[i] = v.getIndexAtVector(i) / mag;
+             }
+             
+             result = new VectorLinAlg(tmp);
+             return result;
+        }
+        
+        /**
+         *  Scalar projection of v1 along v2
+         *  @param v1
+         *  @param v2
+         *  @return the scalar component of v1 which lies along the direction of v2
+         */
+       
+        public static VectorLinAlg scalarProjection(VectorLinAlg v1, VectorLinAlg v2){
+          
+             //based on: Scalar component of v1 on v2 = ||v1|| x cos(theta)
+             double v1CompOnv2 = getMagnitude(v1)*cos(getTheta);
+             return v1CompOnv2;
+        }
+        
+        public static VectorLinAlg vectorProjection(VectorLinAlg v1, VectorLinAlg v2){
+             //based on: v1 on v2 = Scalar component of v1 on v2 * v2 unit vector
+             int dim = v2.getDimension(); //Need the dimension of v2 for the iteration.
+             double mag = v2.getMagnitude();
+             
+             double[] tmp = new double[dim]; //Create an empty array of size dim.
+             for(int i = 0; i < dim; i++){
+                tmp[i] = v2.unitVector().getIndexAtVector(i) * v1.scalarProjection();
+             } //the above statement should take the v2 unit vector and then do the indexing - not sure...
+             
+             result = new VectorLinAlg(tmp);
+             return result;
+        }
+        
 
 }
