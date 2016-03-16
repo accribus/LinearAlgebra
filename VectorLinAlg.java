@@ -270,11 +270,12 @@ public class VectorLinAlg {
              int dim = v.getDimension(); //Pass dimension of v into method
              VectorLinAlg result;
              
+             double mag = v.getMagnitude();
              
              double[] tmp = new double[dim]; //Create an empty container called array, of size dim.
              
              for(int i = 0; i < dim; i++){ //for loop divides every element in v by mag.
-                tmp[i] = v.getIndexAtVector(i) / v.getIndexAtVector(i);
+                tmp[i] = v.getIndexAtVector(i) / mag;
              }
              
              result = new VectorLinAlg(tmp);
@@ -308,8 +309,9 @@ public class VectorLinAlg {
              
              double[] tmp = new double[dim]; //Create an empty array of size dim.
              for(int i = 0; i < dim; i++){
-                //tmp[i] = v2.unitVector()v2.getIndexAtVector(i) * v1.scalarProjection();
-             } //the above statement should take the v2 unit vector and then do the indexing - not sure...
+                tmp[i] = v2.unitVector().getIndexAtVector(i) * v1.scalarProjection();
+             } //Changed the code above a tiny bit - it seems like (v2.unitVector()) should be the vector
+               //passed into the getIndexAtVector method - and therefore before the dot.  Please provide input.
              
              result = new VectorLinAlg(tmp);
              return result;
