@@ -1,9 +1,10 @@
 
 
+
 /**
  * This class implements vectors as used in linear algebra.  Vector operations are defined here.
  * @author Accribus
- * 
+ * @author MJay1982
  */
 public class VectorLinAlg {
 	
@@ -259,5 +260,64 @@ public class VectorLinAlg {
                 v.setIndexAtVector(i, 0);
             }
         }
+        /**
+         * Creates a unit vector.
+         * @param v1
+         * @return a normalized vector
+         * 
+         */
+        public static VectorLinAlg unitVector(VectorLinAlg v){
+             int dim = v.getDimension(); //Pass dimension of v into method
+             VectorLinAlg result;
+             
+             double mag = v.getMagnitude();
+             
+             double[] tmp = new double[dim]; //Create an empty container called array, of size dim.
+             
+             for(int i = 0; i < dim; i++){ //for loop divides every element in v by mag.
+                tmp[i] = v.getIndexAtVector(i) / mag;
+             }
+             
+             result = new VectorLinAlg(tmp);
+             return result;
+        }
+        
+        /**
+         *  Scalar projection of v1 along v2
+         *  @param v1
+         *  @param v2
+         *  @return the scalar component of v1 which lies along the direction of v2
+         */       
+        public static double scalarProjection(VectorLinAlg v1, VectorLinAlg v2){
+          
+             //based on: Scalar component of v1 on v2 = ||v1|| x cos(theta)
+             double v1CompOnv2 = getMagnitude(v1) * Math.cos(getTheta(v1, v2));
+             return v1CompOnv2;
+        }
+        
+        /*
+        currently fails test- but no worries
+        the vector projection of v1 onto v2
+        should be the unit vector * the scalar projection
+        of v1 along v2
+        */
+        public static VectorLinAlg vectorProjection(VectorLinAlg v1, VectorLinAlg v2){
+             //based on: v1 on v2 = Scalar component of v1 on v2 * v2 unit vector
+             int dim = v2.getDimension(); //Need the dimension of v2 for the iteration.
+             double mag = getMagnitude(v2);
+             VectorLinAlg result;
+             
+             double[] tmp = new double[dim]; //Create an empty array of size dim.
+             for(int i = 0; i < dim; i++){
+                tmp[i] = v2.unitVector().getIndexAtVector(i) * v1.scalarProjection();
+             } //Changed the code above a tiny bit - it seems like (v2.unitVector()) should be the vector
+               //passed into the getIndexAtVector method - and therefore before the dot.  Please provide input.
+             
+             result = new VectorLinAlg(tmp);
+             return result;
+        }
+        
+        
+        
 
 }

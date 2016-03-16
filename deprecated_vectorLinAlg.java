@@ -1,11 +1,11 @@
 
-
+//==========================Deprecated File: all changes rolled into VectorLinAlg.java===========================
 /**
  * This class implements vectors as used in linear algebra.  Vector operations are defined here.
  * @author Accribus
  * 
  */
-public class VectorLinAlg {
+public class deprecated_VectorLinAlg {
  
  private double[] vectorDouble;
          
