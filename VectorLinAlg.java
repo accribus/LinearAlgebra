@@ -270,7 +270,7 @@ public class VectorLinAlg {
              int dim = v.getDimension(); //Pass dimension of v into method
              VectorLinAlg result;
              
-             double mag = v.getMagnitude();
+             double mag = getMagnitude(v);
              
              double[] tmp = new double[dim]; //Create an empty container called array, of size dim.
              
@@ -306,12 +306,21 @@ public class VectorLinAlg {
              int dim = v2.getDimension(); //Need the dimension of v2 for the iteration.
              double mag = getMagnitude(v2);
              VectorLinAlg result;
+             VectorLinAlg unitTmp = unitVector(v2);
+             
+             /**
+              * I broke apart the logic in the loop
+              * to be easier to follow
+              * 
+              * 1) made a unitTmp vector that is the unit vector of v2
+              * 2) changed method calls to be more readable (they're static)
+              * 
+              */
              
              double[] tmp = new double[dim]; //Create an empty array of size dim.
              for(int i = 0; i < dim; i++){
-                tmp[i] = v2.unitVector().getIndexAtVector(i) * v1.scalarProjection();
-             } //Changed the code above a tiny bit - it seems like (v2.unitVector()) should be the vector
-               //passed into the getIndexAtVector method - and therefore before the dot.  Please provide input.
+                tmp[i] = unitTmp.getIndexAtVector(i) * scalarProjection(v1, v2);
+             } 
              
              result = new VectorLinAlg(tmp);
              return result;
