@@ -41,7 +41,7 @@ public class VectorTester {
              * test unitVector() method
              */
             VectorLinAlg unitVector = VectorLinAlg.unitVector(dblV1);
-            System.out.println("vector dblV1:" + dblV1.toString() + "\nresulting unit vector: " + unitVector.toString());
+            System.out.println("vector dblV1:" + dblV1.toString() + " ... resulting unit vector: " + unitVector.toString());
             
             
             /**
